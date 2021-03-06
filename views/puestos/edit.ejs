@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar</title>
+</head>
+<body>
+    <h1>Modifica <%= puesto.title %> </h1>
+    <form action="/puestos/<%=puesto._id%>?_method=PUT" method="post">
+        <div>
+            <label for="title">Nombre del puesto:</label>
+            <input type="text" id="title" name="title" value="<%= puesto.title %> ">
+        </div>
+        <div>
+            <label for="calle">Calle:</label>
+            <input type="text" id="calle" name="calle" value="<%= puesto.calle %> ">
+        </div>
+        <button>Guardar cambios</button>
+    </form>
+    <a href="/puestos">de Vuelta</a>
+</body>
+</html>

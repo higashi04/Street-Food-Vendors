@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puestesios</title>
+</head>
+<body>
+    <h1>Puestos de Tacos</h1>
+
+    <ul>
+        <% for (let puesto of puestos) {%>
+            <li><a href="/puestos/<%=puesto._id%>"><%= puesto.title %></a> </li>
+         <% } %> 
+    </ul>
+
+    <a href="/puestos/new">Nuevo</a>
+</body>
+</html>
