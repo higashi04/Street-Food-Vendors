@@ -1,20 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puestesios</title>
-</head>
-<body>
+<% layout('layouts/boilerplate') %> 
     <h1>Puestos de Tacos</h1>
 
-    <ul>
         <% for (let puesto of puestos) {%>
-            <li><a href="/puestos/<%=puesto._id%>"><%= puesto.title %></a> </li>
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-fluid" src="<%=puesto.image%> " alt="">
+                   
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= puesto.title %> </h5>
+                            <p class="card-text"><%= puesto.descripción %> </p>
+                            <p class="card-text">
+                                <small class="text-muted"><%= puesto.calle %> </small>
+                            </p>
+                            <a class="btn btn-primary" href="/puestos/<%=puesto._id%>"> Detalles </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
          <% } %> 
-    </ul>
 
-    <a href="/puestos/new">Nuevo</a>
-</body>
-</html>
+
+

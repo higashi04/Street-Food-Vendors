@@ -1,21 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shower</title>
-</head>
-<body>
-    <h1><%= puesto.title %> </h1>
-    <h2><%= puesto.calle %> </h2>
+<% layout('layouts/boilerplate') %> 
+<div class="row">
+        <div class="col-6 offset-3">
+            <div class="card mb-3">
+                <img src="<%=puesto.image%>" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= puesto.title %></h5>
+                  <p class="card-text"><%= puesto.descripción %> </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><%= puesto.calle %></li>
+                  <li class="list-group-item"><a class="card-link btn btn-primary" href="/puestos">De vuelta al index</a></li>
+                  <li class="list-group-item"><a class="card-link btn btn-info" href="/puestos/<%=puesto._id%>/edit">Modificar</a></li>
+                </ul>
+                <div class="card-body">
+                    <form action="/puestos/<%=puesto._id%>?_method=DELETE" method="post">
+                        <button class="btn btn-danger">Eliminar</button>
+                    </form>   
+                </div>
+              </div>
+        </div>
+</div>
+
     
-
-    <button><a href="/puestos">De vuelta al index</a></button>
-    <button><a href="/puestos/<%=puesto._id%>/edit">Modifica</a></button>
-
-    <form action="/puestos/<%=puesto._id%>?_method=DELETE" method="post">
-        <button>Eliminar</button>
-    </form>
-</body>
-</html>

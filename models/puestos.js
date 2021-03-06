@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const PuestosSchema = new Schema({
     title: String,
     calle: String,
+    image: String,
     descripción: String
 });
 

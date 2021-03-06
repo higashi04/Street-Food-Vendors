@@ -24,7 +24,8 @@ const seedDB = async () =>{
         const puesto = new Puestos({
             title: `${taqueria[rand34]}`,
             calle: `${calles[rand34]}`,
-            descripción: `${descripciones[rand34]}`
+            descripción: `${descripciones[rand34]}`,
+            image: 'https://source.unsplash.com/collection/2576125'
 
         })
         await puesto.save();
