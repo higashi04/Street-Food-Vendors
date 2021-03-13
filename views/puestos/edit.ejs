@@ -1,21 +1,33 @@
 <% layout('layouts/boilerplate') %> 
     <h1>Modifica <%= puesto.title %> </h1>
-    <form action="/puestos/<%=puesto._id%>?_method=PUT" method="post">
+    <form action="/puestos/<%=puesto._id%>?_method=PUT" method="post" novalidate class="needs-validation">
         <div class="mb-3">
             <label class="form-label" for="title">Nombre del puesto:</label>
-            <input class="form-control" type="text" id="title" name="title" value="<%= puesto.title %> ">
+            <input class="form-control" type="text" id="title" name="Puesto[title]" value="<%= puesto.title %> " required>
+            <div class="valid-feedback">
+                Bien hecho
+              </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="calle">Calle:</label>
-            <input class="form-control" type="text" id="calle" name="calle" value="<%= puesto.calle %> ">
+            <input class="form-control" type="text" id="calle" name="Puesto[calle]" value="<%= puesto.calle %> " required>
+            <div class="valid-feedback">
+                Bien hecho
+              </div>
         </div>
         <div class="mb-3">
             <label class="form-label " for="descripción">Cuentame sobre tus tacos:</label>
-            <textarea class="form-control" type="text" id="descripción" name="descripción"><%= puesto.descripción %></textarea>
+            <textarea class="form-control" type="text" id="descripción" name="Puesto[descripción]" required><%= puesto.descripción %></textarea>
+            <div class="valid-feedback">
+                Bien hecho
+              </div>
         </div>
         <div class="mb-3">
             <label class="form-label " for="image">Enlace con la foto de tu puesto:</label>
-            <input class="form-control" type="text" id="image" name="image" value="<%= puesto.image %> ">
+            <input class="form-control" type="text" id="image" name="Puesto[image]" value="<%= puesto.image %> " required>
+            <div class="valid-feedback">
+                Bien hecho
+              </div>
         </div>
         <div class="mb-3">
         <button class="btn btn-info">Guardar cambios</button></div>

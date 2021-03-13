@@ -2,22 +2,34 @@
 <div class="row">
     <h1 class="text-center">Registra tu puesto de tacos</h1>
     <div class="col-6 offset-3">
-        <form action="/puestos" method="post">
+        <form action="/puestos" method="post" novalidate class="needs-validation">
             <div class="mb-3">
                 <label class="form-label" for="title">Nombre del puesto:</label>
-                <input class="form-control" type="text" id="title" name="title">
+                <input class="form-control" type="text" id="title" name="Puesto[title]" required>
+                <div class="valid-feedback">
+                  Bien hecho
+                </div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="calle">Calle:</label>
-                <input class="form-control" type="text" id="calle" name="calle">
+                <input class="form-control" type="text" id="calle" name="Puesto[calle]" required>
+                <div class="valid-feedback">
+                  Bien hecho
+                </div>
             </div>
             <div class="mb-3">
                 <label class="form-label " for="descripción">Cuentame sobre tus tacos:</label>
-                <textarea class="form-control" type="text" id="descripción" name="descripción"></textarea>
-            </div>
+                <textarea class="form-control" type="text" id="descripción" name="Puesto[descripción]" required></textarea>
+                <div class="valid-feedback">
+                  Bien hecho
+                </div>
+              </div>
             <div class="mb-3">
                 <label class="form-label " for="image">Enlace con la foto de tu puesto:</label>
-                <input class="form-control" type="text" id="image" name="image">
+                <input class="form-control" type="text" id="image" name="Puesto[image]" required>
+              <div class="valid-feedback">
+                Bien hecho
+              </div>
             </div>
             <div class="mb-3"><button class="btn btn-info">Guardar</button></div>           
         </form>
