@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate') %> 
+<div class="row">
+    <h1 class="text-center">Registra tus tacos</h1>
+    <div class="col-6 offset-3">
+        <form action="/puestos/<%=id%> " method="post" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label class="form-label" for="title">Nombre del puesto:</label>
+                <input class="form-control" type="text" id="title" name="Taco[title]" required>
+                <div class="valid-feedback">
+                  Bien hecho
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label " for="descripción">Cuentame sobre tus tacos:</label>
+                <textarea class="form-control" type="text" id="descripción" name="Taco[descripción]" required></textarea>
+                <div class="valid-feedback">
+                  Bien hecho
+                </div>
+              </div>
+            <div class="mb-3">
+                <label class="form-label " for="image">Enlace con la foto de tus tacos:</label>
+                <input class="form-control" type="text" id="image" name="Taco[image]" required>
+              <div class="valid-feedback">
+                Bien hecho
+              </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label " for="precio">Precio:</label>
+                <input class="form-control" type="number" id="precio" name="Taco[precio]" required>
+              <div class="valid-feedback">
+                Bien hecho
+              </div>
+            </div>
+            <div class="mb-3"><button class="btn btn-info">Guardar</button></div>           
+        </form>
+        <a class="btn btn-primary" href="/puestos">de Vuelta</a>
+    </div>
+</div>    

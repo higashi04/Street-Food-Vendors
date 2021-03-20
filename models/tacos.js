@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const PuestosSchema = new Schema({
+const TacosSchema = new Schema({
     title: String,
-    calle: String,
     image: String,
     descripción: String,
-    tacos: {
+    precio: Number,
+    puesto: {
         type: Schema.Types.ObjectId,
-        ref: 'Tacos'
+        ref: 'Puestos'
     }
 });
 
-module.exports = mongoose.model('Puestos', PuestosSchema);
+module.exports = mongoose.model('Tacos', TacosSchema);
