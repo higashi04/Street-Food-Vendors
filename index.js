@@ -40,17 +40,6 @@ const validaTacos = (req, res, next) => {
         next();}
 }
 
-//new Tacos routes
-// app.get('/puesto/:id/newTacos/new', (req, res) => {
-//     const { id } = req.params;
-//     res.render('newTacos/new', { id });
-// });
-// app.post('/puestos/:id/newTacos', (req, res) => {
-//     const { id } = req.params;
-//     const puesto = await Puestos.findById(id);
-//     const tacos = new Tacos(req.body.Taco)
-// })
-//
 
 app.get('/puestos', AsyncErrors(async(req, res) =>{
     const puestos = await Puestos.find({});
@@ -67,7 +56,8 @@ app.get('/puestos/new', (req, res) =>{
     res.render('puestos/nuevo.ejs');
 });
 app.get('/puestos/:id', AsyncErrors(async (req, res) =>{
-    const puesto = await Puestos.findById(req.params.id);   
+    const puesto = await Puestos.findById(req.params.id).populate('tacos');
+    console.log(puesto);   
     res.render('puestos/show', { puesto });
 }));
 
@@ -87,6 +77,25 @@ app.delete('/puestos/:id', AsyncErrors(async(req, res) => {
     await Puestos.findByIdAndDelete(id);
     res.redirect('/puestos')
 }));
+
+//////////////new Tacos routes///////////////////////////////////////////////////////
+app.get('/puestos/:id/newTacos/new', (req, res) => {
+    const { id } = req.params;
+    res.render('newTacos/new', { id });
+});
+app.post('/puestos/:id', AsyncErrors(async(req, res) => {
+    const { id } = req.params;
+    const puesto = await Puestos.findById(id);
+    const { title, descripción, image, precio } = req.body
+    const tacos = new Tacos({ title, descripción, image, precio });
+    puesto.tacos.push(tacos);
+    tacos.puesto = puesto;
+    await puesto.save();
+    await tacos.save();
+    console.log(puesto);
+    res.redirect(`/puestos/${puesto._id}`)
+}))
+///////////////////////////////////////////////////////////////////////////////////
 
 app.all('*', (req, res, next) => {
     next(new AppError('Sitio No Existe', 404))
