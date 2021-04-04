@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate') %> 
 <div class="row">
-    <h1 class="text-center">Registra tus tacos</h1>
+    <h1 class="text-center"><%=puesto.title%></h1>
+    <h2 class="text-center">Registra tus tacos</h2>
     <div class="col-6 offset-3">
         <form action="/puestos/<%=id%>" method="post" novalidate class="needs-validation">
             <div class="mb-3">
@@ -33,9 +34,12 @@
             </div>
             <div class="mb-3"><button class="btn btn-info">Guardar</button></div>           
         </form>
-        <a class="btn btn-primary" href="/puestos">de Vuelta</a>
+        <a class="btn btn-primary" href="/puestos/<%=puesto._id%>">De vuelta</a>
     </div>
-</div>    
+
+</div>  
+
+
 
 <script>
   const precio = document.querySelector('#precio');

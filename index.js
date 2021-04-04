@@ -79,10 +79,11 @@ app.delete('/puestos/:id', AsyncErrors(async(req, res) => {
 }));
 
 //////////////new Tacos routes///////////////////////////////////////////////////////
-app.get('/puestos/:id/newTacos/new', (req, res) => {
+app.get('/puestos/:id/newTacos/new', AsyncErrors(async(req, res) => {
     const { id } = req.params;
-    res.render('newTacos/new', { id });
-});
+    const puesto = await Puestos.findById(id);
+    res.render('newTacos/new', { id, puesto });
+}));
 app.post('/puestos/:id', AsyncErrors(async(req, res) => {
     const { id } = req.params;
     const puesto = await Puestos.findById(id);
@@ -111,4 +112,4 @@ app.use((err, req, res, next) => {
 
 app.listen(3000, ()=> {
     console.log("they listening to us!! on port three thousand minus seven!!!!")
-})
+});
