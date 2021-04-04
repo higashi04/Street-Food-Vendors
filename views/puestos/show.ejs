@@ -1,23 +1,28 @@
 <% layout('layouts/boilerplate') %> 
 <div class="row">
-        <div class="col-6 offset-3">
+        <div class="col-6">
             <div class="card mb-3">
                 <img src="<%=puesto.image%>" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title"><%= puesto.title %></h5>
                   <p class="card-text"><%= puesto.descripción %> </p>
                   <p class="card-text"><%= puesto.calle %></p>
-                  <h3>Menú</h3>
-                  <ol>
-                    <% for(let taco of puesto.tacos ) { %>
-                      <li><%= taco.title %></li>
-                        <ul>
-                          <li>$<%= taco.precio%>.00 MXN C/U </li>
-                          <li> <b> Descripción</b>: <%= taco.descripción %> </li>
-                        </ul>  
+                  <div class="card-body">
+                    <h3 class="card-title">Menú</h3>
+                    <ol>
+                      <% for(let taco of puesto.tacos ) { %>
+                        <li><%= taco.title %></li>
+                          <ul>
+                            <li>$<%= taco.precio%>.00 MXN C/U </li>
+                            <li> <b> Descripción</b>: <%= taco.descripción %> </li>
+                          </ul>  
+                          <form action="/puestos/<%=puesto._id%>/newTacos/<%=taco._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Eliminar</button>
+                          </form>
+                      <% } %>
+                    </ol>
                     
-                    <% } %>
-                  </ol>
+                  </div>
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"><a class="card-link btn btn-primary" href="/puestos/<%=puesto._id%>/newTacos/new">Agrega tacos a tú menú</a></li>
@@ -26,11 +31,39 @@
                 </ul>
                 <div class="card-body">
                     <form action="/puestos/<%=puesto._id%>?_method=DELETE" method="post">
-                        <button class="btn btn-danger">Eliminar</button>
+                        <button class="btn btn-danger">Eliminar Puesto</button>
                     </form>   
                 </div>
               </div>
         </div>
+        <div class="col-6">
+          <h2>Deja tu opinión</h2>
+          <form action="/puestos/<%=puesto._id%>/reviews" method="POST" class="mb-3 needs-validation" novalidate>
+            <div class="mb-3">
+              <label class="form-label" for="">Calificación</label>
+              <input type="range" min="1" max="5" class="form-range" name="review[rating]" id="rating">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="body">Reseña</label>
+              <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+              <div class="valid-feedback">
+                Bien hecho
+              </div>
+            </div>
+            <button class="btn btn-success">Guardar</button>
+          </form>
+          <h2> Reseñas </h2>
+          <%for (let review of puesto.reviews) {%> 
+            <div class="card mb-3">
+             <div class="card-body">
+              <h5 class="card-title"><b> Calificación: <%= review.rating %>/5 </b></h5>
+               <p><%= review.body %> </p>
+               <form action="/puestos/<%=puesto._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+                  <button class="btn btn-danger">Eliminar</button>
+              </form>
+             </div>
+            </div>
+          <% } %>
+        </div>
 </div>
-
     

@@ -17,3 +17,9 @@ module.exports.TacosSchema = JOI.object({
     }).required()
 });
 
+module.exports.reviewSchema = JOI.object({
+    review: JOI.object({
+        rating: JOI.number().required().min(1).max(5),
+        body: JOI.string().required()
+    }).required()
+})

@@ -3,7 +3,7 @@
     <h1 class="text-center"><%=puesto.title%></h1>
     <h2 class="text-center">Registra tus tacos</h2>
     <div class="col-6 offset-3">
-        <form action="/puestos/<%=id%>" method="post" novalidate class="needs-validation">
+        <form action="/puestos/<%=id%>/newTacos" method="post" novalidate class="needs-validation">
             <div class="mb-3">
                 <label class="form-label" for="title">Nombre del taco:</label>
                 <input class="form-control" type="text" id="title" name="title" required>

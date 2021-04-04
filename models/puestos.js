@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
-const Tacos = require('./tacos')
+const Tacos = require('./tacos');
+const Review = require('./reviews');
 
 const PuestosSchema = new Schema({
     title: {
@@ -16,14 +17,27 @@ const PuestosSchema = new Schema({
     tacos: [{
         type: Schema.Types.ObjectId,
         ref: 'Tacos'
-    }]
+    }],
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ]
 });
 
-PuestosSchema.pre('findOneAndDelete', async function(puesto){
+PuestosSchema.post('findOneAndDelete', async function(puesto){
     if (puesto.tacos.length) {
-       // const res = 
        await Tacos.deleteMany({_id: {$in: puesto.tacos}});
-       // console.log(res)
+       
+        
+    }
+});
+
+PuestosSchema.post('findOneAndDelete', async function(puesto){
+    if (puesto.reviews.length) {
+       await Review.deleteMany({_id: {$in: puesto.reviews}});
+       
         
     }
 });
