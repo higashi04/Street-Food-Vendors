@@ -5,6 +5,7 @@ const AppError = require('../AppError');
 const { reviewSchema } = require('../validaTacos');
 const Review = require('../models/reviews');
 const Puestos = require('../models/puestos');
+const {isLoggedIn} = require('../middleware');
 
 const validateReview = (req, res, next) =>{
     const {error} = reviewSchema.validate(req.body);
@@ -15,7 +16,7 @@ const validateReview = (req, res, next) =>{
         next();}
 }
 
-router.post('/', validateReview, AsyncErrors(async(req, res) =>{
+router.post('/', isLoggedIn, validateReview, AsyncErrors(async(req, res) =>{
     const puesto = await Puestos.findById(req.params.id);
     const review = new Review(req.body.review);
     puesto.reviews.push(review);
@@ -25,7 +26,7 @@ router.post('/', validateReview, AsyncErrors(async(req, res) =>{
     res.redirect(`/puestos/${puesto._id}`);
 }));
 
-router.delete('/:reviewId', AsyncErrors(async(req, res) =>{
+router.delete('/:reviewId', isLoggedIn, AsyncErrors(async(req, res) =>{
     const {id, reviewId} = req.params;
     await Puestos.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
     await Review.findByIdAndDelete(reviewId);

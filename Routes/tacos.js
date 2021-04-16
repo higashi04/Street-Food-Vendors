@@ -5,6 +5,7 @@ const AppError = require('../AppError');
 const { TacosSchema} = require('../validaTacos');
 const Tacos = require('../models/tacos');
 const Puestos = require('../models/puestos');
+const {isLoggedIn} = require('../middleware');
 
 const validaTacos = (req, res, next) => { 
     const { error } = PuestosSchema.validate(req.body);
@@ -16,12 +17,12 @@ const validaTacos = (req, res, next) => {
 }
 
 
-router.get('/new', AsyncErrors(async(req, res) => {
+router.get('/new', isLoggedIn, AsyncErrors(async(req, res) => {
     const { id } = req.params;
     const puesto = await Puestos.findById(id);
     res.render('newTacos/new', { id, puesto });
 }));
-router.post('/', AsyncErrors(async(req, res) => {
+router.post('/', isLoggedIn, AsyncErrors(async(req, res) => {
     const { id } = req.params;
     const puesto = await Puestos.findById(id);
     const { title, descripción, image, precio } = req.body
@@ -33,7 +34,7 @@ router.post('/', AsyncErrors(async(req, res) => {
     req.flash('success', 'Artículo añadido correctamente');
     res.redirect(`/puestos/${puesto._id}`)
 }));
-router.delete('/:tacoId', AsyncErrors(async(req, res) =>{
+router.delete('/:tacoId', isLoggedIn, AsyncErrors(async(req, res) =>{
     const {id, tacoId} = req.params;
     await Puestos.findByIdAndUpdate(id, {$pull: {tacos: tacoId}});
     await Tacos.findByIdAndDelete(tacoId);

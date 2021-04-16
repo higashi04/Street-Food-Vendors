@@ -4,6 +4,7 @@ const AsyncErrors = require('../AsyncErrors');
 const AppError = require('../AppError');
 const { PuestosSchema} = require('../validaTacos');
 const Puestos = require('../models/puestos');
+const {isLoggedIn} = require('../middleware');
 
 const validaTacos = (req, res, next) => { 
     const { error } = PuestosSchema.validate(req.body);
@@ -20,14 +21,14 @@ router.get('/', AsyncErrors(async(req, res) =>{
     res.render('puestos/index', { puestos })
 }));
 
-router.post('/', validaTacos, AsyncErrors(async (req, res, next) =>{
+router.post('/', isLoggedIn, validaTacos, AsyncErrors(async (req, res, next) =>{
         const puesto = new Puestos(req.body.Puesto);
         await puesto.save();
         req.flash('success', 'Puesto registrado correctamente');
         res.redirect(`/puestos/${puesto._id}`)    
 })); 
 
-router.get('/new', (req, res) =>{
+router.get('/new', isLoggedIn, (req, res) =>{
     res.render('puestos/nuevo.ejs');
 });
 router.get('/:id', AsyncErrors(async (req, res) =>{
@@ -39,7 +40,7 @@ router.get('/:id', AsyncErrors(async (req, res) =>{
     res.render('puestos/show', { puesto });
 }));
 
-router.get('/:id/edit', AsyncErrors(async(req, res) =>{
+router.get('/:id/edit', isLoggedIn, AsyncErrors(async(req, res) =>{
     const puesto = await Puestos.findById(req.params.id);
     if (!puesto){
         req.flash('error', 'No es posible encontrar tu puesto');
@@ -48,14 +49,14 @@ router.get('/:id/edit', AsyncErrors(async(req, res) =>{
      res.render('puestos/edit', { puesto });
 }));
 
-router.put('/:id', validaTacos, AsyncErrors(async(req, res) =>{
+router.put('/:id', isLoggedIn, validaTacos, AsyncErrors(async(req, res) =>{
     const { id } = req.params;
     const puesto = await Puestos.findByIdAndUpdate(id, {...req.body.Puesto});
     req.flash('success', 'Puesto actualizado correctamente');
     res.redirect(`/puestos/${puesto._id}`);
 }));
 
-router.delete('/:id', AsyncErrors(async(req, res) => {
+router.delete('/:id', isLoggedIn, AsyncErrors(async(req, res) => {
     const { id } = req.params;
     await Puestos.findByIdAndDelete(id);
     req.flash('success', 'Puesto eliminado correctamente');
