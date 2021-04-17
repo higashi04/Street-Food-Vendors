@@ -23,6 +23,7 @@ router.get('/', AsyncErrors(async(req, res) =>{
 
 router.post('/', isLoggedIn, validaTacos, AsyncErrors(async (req, res, next) =>{
         const puesto = new Puestos(req.body.Puesto);
+        puesto.author = req.user._id;
         await puesto.save();
         req.flash('success', 'Puesto registrado correctamente');
         res.redirect(`/puestos/${puesto._id}`)    
@@ -32,7 +33,7 @@ router.get('/new', isLoggedIn, (req, res) =>{
     res.render('puestos/nuevo.ejs');
 });
 router.get('/:id', AsyncErrors(async (req, res) =>{
-    const puesto = await Puestos.findById(req.params.id).populate('tacos').populate('reviews');  
+    const puesto = await Puestos.findById(req.params.id).populate('tacos').populate('reviews').populate('author');  
     if (!puesto){
         req.flash('error', 'No es posible encontrar tu puesto');
         return res.redirect('/puestos')

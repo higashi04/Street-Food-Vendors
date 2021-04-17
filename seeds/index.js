@@ -25,7 +25,8 @@ const seedDB = async () =>{
             title: `${taqueria[rand34]}`,
             calle: `${calles[rand34]}`,
             descripción: `${descripciones[rand34]}`,
-            image: 'https://source.unsplash.com/collection/2576125'
+            image: 'https://source.unsplash.com/collection/2576125',
+            author: '607b21f0ec3ada12c85e8937'
 
         })
         await puesto.save();

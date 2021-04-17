@@ -7,6 +7,7 @@
                   <h5 class="card-title"><%= puesto.title %></h5>
                   <p class="card-text"><%= puesto.descripción %> </p>
                   <p class="card-text"><%= puesto.calle %></p>
+                  <p class="card-text"> Creado por <%= puesto.author.username %>  </p>
                   <div class="card-body">
                     <h3 class="card-title">Menú</h3>
                     <ol>
@@ -15,16 +16,20 @@
                           <ul>
                             <li>$<%= taco.precio%>.00 MXN C/U </li>
                             <li> <b> Descripción</b>: <%= taco.descripción %> </li>
-                          </ul>  
-                          <form action="/puestos/<%=puesto._id%>/newTacos/<%=taco._id%>?_method=DELETE" method="POST">
-                            <button class="btn btn-danger">Eliminar</button>
-                          </form>
+                          </ul> 
+                          <% if (currentUser && puesto.author.equals(currentUser._id)) { %>
+                            <form action="/puestos/<%=puesto._id%>/newTacos/<%=taco._id%>?_method=DELETE" method="POST">
+                              <button class="btn btn-danger">Eliminar</button>
+                            </form>
+                          <% } %> 
+                          
                       <% } %>
                     </ol>
                     
                   </div>
                 </div>
-                <ul class="list-group list-group-flush">
+                <% if (currentUser && puesto.author.equals(currentUser._id)) { %>
+                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"><a class="card-link btn btn-primary" href="/puestos/<%=puesto._id%>/newTacos/new">Agrega tacos a tú menú</a></li>
                   <li class="list-group-item"><a class="card-link btn btn-primary" href="/puestos">De vuelta al index</a></li>
                   <li class="list-group-item"><a class="card-link btn btn-info" href="/puestos/<%=puesto._id%>/edit">Modificar</a></li>
@@ -34,6 +39,8 @@
                         <button class="btn btn-danger">Eliminar Puesto</button>
                     </form>   
                 </div>
+                <% } %>
+                
               </div>
         </div>
         <div class="col-6">
@@ -58,9 +65,11 @@
              <div class="card-body">
               <h5 class="card-title"><b> Calificación: <%= review.rating %>/5 </b></h5>
                <p><%= review.body %> </p>
+               <% if (currentUser && puesto.author.equals(currentUser._id)) { %>
                <form action="/puestos/<%=puesto._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
                   <button class="btn btn-danger">Eliminar</button>
               </form>
+              <% } %>
              </div>
             </div>
           <% } %>

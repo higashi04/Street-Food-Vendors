@@ -14,6 +14,10 @@ const PuestosSchema = new Schema({
         },
     image: String,
     descripción: String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     tacos: [{
         type: Schema.Types.ObjectId,
         ref: 'Tacos'
