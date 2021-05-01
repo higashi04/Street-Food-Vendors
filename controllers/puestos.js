@@ -1,4 +1,5 @@
 const Puestos = require('../models/puestos');
+const {cloudinary} = require('../cloudinary')
 
 
 module.exports.index = async(req, res) =>{
@@ -12,8 +13,10 @@ module.exports.renderNewForm = (req, res) =>{
 
 module.exports.createPuesto = async (req, res, next) =>{
     const puesto = new Puestos(req.body.Puesto);
+    puesto.images = req.files.map(f => ({url: f.path, filename: f.filename}));
     puesto.author = req.user._id;
     await puesto.save();
+    console.log(puesto);
     req.flash('success', 'Puesto registrado correctamente');
     res.redirect(`/puestos/${puesto._id}`)    
 };

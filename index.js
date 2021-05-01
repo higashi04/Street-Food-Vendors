@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -9,6 +13,7 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+
 
 //////routes////
 const puestos = require('./Routes/puestos');
@@ -69,10 +74,10 @@ app.use((req, res, next) =>{
     next();
 });
 
+app.use('/', userRoutes);
 app.use('/puestos', puestos);
 app.use('/puestos/:id/reviews', reviews);
 app.use('/puestos/:id/newTacos', tacos);
-app.use('/', userRoutes);
 
 app.all('*', (req, res, next) => {
     next(new AppError('Sitio No Existe', 404))

@@ -3,7 +3,7 @@ module.exports.PuestosSchema = JOI.object({
     Puesto: JOI.object({
         title: JOI.string().required(),
         calle: JOI.string().required(),
-        image: JOI.string().required(),
+       // image: JOI.string().required(),
         descripción: JOI.string().required(),
     }).required()
 });

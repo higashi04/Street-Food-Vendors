@@ -12,7 +12,12 @@ const PuestosSchema = new Schema({
         type: String,
         required: [true, 'necesitas decirme donde están tus tacos']
         },
-    image: String,
+    images: [
+        {
+            url: String,
+            filename: String
+        }
+    ],
     descripción: String,
     author: {
         type: Schema.Types.ObjectId,
