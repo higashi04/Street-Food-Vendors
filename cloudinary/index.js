@@ -13,8 +13,7 @@ const storage = new CloudinaryStorage({
     params: {
         folder: 'streetFood',
         allowedFormats: ['jpeg', 'png', 'jpg']
-    }
-    
+    }   
 });
 
 module.exports = {

@@ -3,6 +3,20 @@ const {Schema} = mongoose;
 const Tacos = require('./tacos');
 const Review = require('./reviews');
 
+
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+});
+
+ImageSchema.virtual('thumbnail').get(function() {
+   return this.url.replace('/upload', '/upload/c_scale,h_200,w_200');
+})
+
+ImageSchema.virtual('picture').get(function() {
+    return this.url.replace('/upload', '/upload/c_fill,w_250,h_250');
+})
+
 const PuestosSchema = new Schema({
     title: {
         type: String,
@@ -13,10 +27,7 @@ const PuestosSchema = new Schema({
         required: [true, 'necesitas decirme donde están tus tacos']
         },
     images: [
-        {
-            url: String,
-            filename: String
-        }
+        ImageSchema
     ],
     descripción: String,
     author: {

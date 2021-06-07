@@ -1,5 +1,8 @@
 const Puestos = require('../models/puestos');
-const {cloudinary} = require('../cloudinary')
+const {cloudinary} = require('../cloudinary');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapBoxToken = process.env.MABBOX_TOKEN;
+const geocoder = mbxGeocoding({accessToken: mapBoxToken});
 
 
 module.exports.index = async(req, res) =>{
@@ -12,13 +15,17 @@ module.exports.renderNewForm = (req, res) =>{
 };
 
 module.exports.createPuesto = async (req, res, next) =>{
-    const puesto = new Puestos(req.body.Puesto);
-    puesto.images = req.files.map(f => ({url: f.path, filename: f.filename}));
-    puesto.author = req.user._id;
-    await puesto.save();
-    console.log(puesto);
-    req.flash('success', 'Puesto registrado correctamente');
-    res.redirect(`/puestos/${puesto._id}`)    
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.Puesto.calle,
+        limit: 1
+    }).send()
+    res.send(geoData.body.features[0].geometry.coordinates);
+    // const puesto = new Puestos(req.body.Puesto);
+    // puesto.images = req.files.map(f => ({url: f.path, filename: f.filename}));
+    // puesto.author = req.user._id;
+    // await puesto.save();
+    // req.flash('success', 'Puesto registrado correctamente');
+    // res.redirect(`/puestos/${puesto._id}`)    
 };
 
 module.exports.showPage = async (req, res) =>{
@@ -48,6 +55,15 @@ module.exports.editPuestoForm = async(req, res) =>{
 module.exports.updatePuesto = async(req, res) =>{
     const { id } = req.params;
     const puesto = await Puestos.findByIdAndUpdate(id, {...req.body.Puesto});
+    const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
+    puesto.images.push(...imgs);
+    await puesto.save();
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages){
+            await cloudinary.uploader.destroy(filename)
+        }
+        await puesto.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages}}}})
+    }
     req.flash('success', 'Puesto actualizado correctamente');
     res.redirect(`/puestos/${puesto._id}`);
 };

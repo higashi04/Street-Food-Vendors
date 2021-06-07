@@ -5,7 +5,8 @@ module.exports.PuestosSchema = JOI.object({
         calle: JOI.string().required(),
        // image: JOI.string().required(),
         descripción: JOI.string().required(),
-    }).required()
+    }).required(),
+    deleteImages: JOI.array()
 });
 
 module.exports.TacosSchema = JOI.object({

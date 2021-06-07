@@ -25,8 +25,17 @@ const seedDB = async () =>{
             title: `${taqueria[rand34]}`,
             calle: `${calles[rand34]}`,
             descripción: `${descripciones[rand34]}`,
-            image: 'https://source.unsplash.com/collection/2576125',
-            author: '607b21f0ec3ada12c85e8937'
+            images: [
+                {
+                  url: 'https://res.cloudinary.com/dzrldsohe/image/upload/v1620506664/streetFood/nfcnbdounyip6q5mhsub.jpg',
+                  filename: 'streetFood/nfcnbdounyip6q5mhsub'
+                },
+                {
+                  url: 'https://res.cloudinary.com/dzrldsohe/image/upload/v1620506665/streetFood/nqflifxkzlhnlbgka5s4.jpg',
+                  filename: 'streetFood/nqflifxkzlhnlbgka5s4'
+                }
+              ],
+            author: '6096f8e7729a0b2b10161f34'
 
         })
         await puesto.save();

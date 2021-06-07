@@ -15,7 +15,7 @@ router.route('/')
 router.get('/new', isLoggedIn, puestosIndex.renderNewForm);
 router.route('/:id')
     .get(AsyncErrors(puestosIndex.showPage))
-    .put(isLoggedIn, isAuthor, validaTacos, AsyncErrors(puestosIndex.updatePuesto))
+    .put(isLoggedIn, isAuthor, upload.array('image'),validaTacos, AsyncErrors(puestosIndex.updatePuesto))
     .delete(isLoggedIn, isAuthor, AsyncErrors(puestosIndex.deletePuesto));
 
 

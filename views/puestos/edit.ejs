@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %> 
     <h1>Modifica <%= puesto.title %> </h1>
-    <form action="/puestos/<%=puesto._id%>?_method=PUT" method="post" novalidate class="needs-validation">
+    <form action="/puestos/<%=puesto._id%>?_method=PUT" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
         <div class="mb-3">
             <label class="form-label" for="title">Nombre del puesto:</label>
             <input class="form-control" type="text" id="title" name="Puesto[title]" value="<%= puesto.title %> " required>
@@ -23,11 +23,17 @@
               </div>
         </div>
         <div class="mb-3">
-            <label class="form-label " for="image">Enlace con la foto de tu puesto:</label>
-            <input class="form-control" type="text" id="image" name="Puesto[image]" value="<%= puesto.image %> " required>
-            <div class="valid-feedback">
-                Bien hecho
-              </div>
+            <label for="image" class="form-label">Agrega fotos:</label>
+            <input class="form-control" type="file" id="image" name="image" multiple>
+        </div>
+        <div class="mb-3">
+            <% puesto.images.forEach(function(img, i){ %>
+                <img src="<%=img.thumbnail%> " class="img-thumbnail" alt="">
+                <div class="form-check-inline">
+                    <input type="checkbox" name="deleteImages[]" id="image-<%=i%>" value="<%=img.filename%>">
+                </div>
+                <label for="image-<%=i%>">¿Eliminar?</label>
+            <% }) %> 
         </div>
         <div class="mb-3">
         <button class="btn btn-info">Guardar cambios</button></div>
